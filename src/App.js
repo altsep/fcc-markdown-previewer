@@ -3,7 +3,8 @@ import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import breaks from "remark-breaks";
 import DOMPurify from "dompurify";
-import useInput from "./Hooks/Input";
+import useInput from "./hooks/useInput";
+import usePrevious from "./hooks/usePrevious";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {
   vs2015,
@@ -11,17 +12,17 @@ import {
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 function App() {
-  const { input, setInput, reset } = useInput();
   const [btnTrigger, setbtnTrigger] = useState(false);
 
-  const clean = DOMPurify.sanitize(input);
-  console.log("Data removed by dompurify: " + DOMPurify.removed);
+  const { input, setInput, reset } = useInput();
 
-  const prevInputRef = useRef();
-  useEffect(() => {
-    prevInputRef.current = input;
-  });
-  const prevInput = prevInputRef.current;
+  const clean = DOMPurify.sanitize(input);
+  if (DOMPurify.removed.length > 0) {
+    console.log("Data removed by dompurify: " + DOMPurify.removed);
+  }
+
+  const prevInput = usePrevious(input);
+  console.log(prevInput);
 
   const btnClass = btnTrigger ? "dark" : "light";
   const elements = useRef();
@@ -54,10 +55,10 @@ function App() {
     },
   };
 
-  var addRule = (function (style) {
-    var sheet = document.head.appendChild(style).sheet;
+  const addRule = (function (style) {
+    const sheet = document.head.appendChild(style).sheet;
     return function (selector, css) {
-      var propText = Object.keys(css)
+      const propText = Object.keys(css)
         .map(function (p) {
           return p + ":" + css[p];
         })
@@ -81,6 +82,10 @@ function App() {
         }
       : { color: "#cfcff9" }
   );
+
+  window.onload = () => {
+    document.getElementById("editor").focus();
+  };
 
   return (
     <>

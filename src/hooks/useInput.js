@@ -44,11 +44,12 @@ export default function useInput() {
   1. Use just 1s if you want!
   1. And last but not least, let's not forget embedded images:
   
-  ![React Logo w/ Text](https://goo.gl/Umyytc)
+  ![React Logo](https://i.imgur.com/Gq2XDWR.png)
   `);
+  
   return {
     input,
     setInput,
-    reset: () => setInput(undefined)
+    reset: () => setInput(undefined),
   };
-};
+}
