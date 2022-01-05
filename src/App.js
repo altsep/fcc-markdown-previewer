@@ -111,11 +111,11 @@ function App() {
         <button className={btnClass} onClick={clear}>
           Clear
         </button>
-        <button className={btnClass} onClick={reset}>
-          Reset
-        </button>
         <button className={btnClass} onClick={() => setInput(prevInput)}>
           Restore
+        </button>
+        <button className={btnClass} onClick={reset}>
+          Reset
         </button>
       </div>
       <div
