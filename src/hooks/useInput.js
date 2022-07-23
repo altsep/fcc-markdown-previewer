@@ -16,48 +16,51 @@ export default function useInput() {
   };
 }
 
-const defaultText = `
-# Welcome to my React Markdown Previewer!
+const defaultText = `# Welcome to markdown previewer!
 
-## This is a sub-heading...
-### And here's some other cool stuff:
+## Sub-heading...
+### Other things:
 
-Heres some code, \`<div></div>\`, between 2 backticks.
+Inline code: \`<div class='class'></div>\`
 
-\`\`\`
-// this is multi-line code:
+\`\`\`js
+// Multi-line code:
 
 function anotherExample(firstLine, lastLine) {
 if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
   return multiLineCode;
-}
+  }
 }
 \`\`\`
 
-You can also make text **bold**... whoa!
-Or _italic_.
-Or... wait for it... **_both!_**
-And feel free to go crazy ~~crossing stuff out~~.
+**Bold text**
 
-There's also [links](https://www.freecodecamp.com), and
-> Block Quotes!
+_Italic text_
 
-And if you want to get really crazy, even tables:
+**_Both at once_**
 
-Wild Header | Crazy Header | Another Header?
------------- | ------------- | -------------
-Your content can | be here, and it | can be here....
-And here. | Okay. | I think we get it.
+~~Line-through~~
 
-- And of course there are lists.
-- Some are bulleted.
-   - With different indentation levels.
-      - That look like this.
+[Url](https://www.freecodecamp.com)
 
+> Block quote
 
-1. And there are numbererd lists too.
-1. Use just 1s if you want!
-1. And last but not least, let's not forget embedded images:
+Table:
+
+H0 | H1 | H2
+00 | 10 | 90
+AA | CC | FF
+
+- List
+- Bulleted list
+   - X
+      - Y
+        - Z
+
+1. Numbererd list.
+1. Q
+1. W
+1. E
 
 ![React Logo](https://i.imgur.com/Gq2XDWR.png)
 `;
