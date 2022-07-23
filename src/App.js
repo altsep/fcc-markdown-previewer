@@ -91,7 +91,7 @@ function App() {
 
   return (
     <div id='main' className={btnClass}>
-      <div>
+      <div id='editor-container'>
         <textarea
           rows='50'
           cols='50'
@@ -106,17 +106,17 @@ function App() {
             localStorage.setItem('input', value);
           }}
         />
-      </div>
-      <div id='buttons' className={btnClass}>
-        <button className={btnClass} onClick={clear}>
-          Clear
-        </button>
-        <button className={btnClass} onClick={() => setInput(prevInput)}>
-          Restore
-        </button>
-        <button className={btnClass} onClick={reset}>
-          Reset
-        </button>
+        <div id='buttons' className={btnClass}>
+          <button className={btnClass} onClick={clear}>
+            Clear
+          </button>
+          <button className={btnClass} onClick={() => setInput(prevInput)}>
+            Restore
+          </button>
+          <button className={btnClass} onClick={reset}>
+            Reset
+          </button>
+        </div>
       </div>
       <div
         style={input === '' || input === undefined ? { border: 'none' } : null}
