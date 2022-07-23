@@ -54,34 +54,6 @@ function App() {
     },
   };
 
-  const addRule = (function (style) {
-    const sheet = document.head.appendChild(style).sheet;
-    return function (selector, css) {
-      const propText = Object.keys(css)
-        .map(function (p) {
-          return p + ':' + css[p];
-        })
-        .join(';');
-      sheet.insertRule(selector + '{' + propText + '}', sheet.cssRules.length);
-    };
-  })(document.createElement('style'));
-  addRule(
-    'a',
-    theme === 'light'
-      ? {
-          color: 'blue',
-        }
-      : { color: '#a2c0ff' }
-  );
-  addRule(
-    'a:visited',
-    theme === 'light'
-      ? {
-          color: '#551a8b',
-        }
-      : { color: '#cfcff9' }
-  );
-
   const editorRef = useRef(null);
 
   useEffect(() => {
