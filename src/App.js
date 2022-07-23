@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import breaks from 'remark-breaks';
@@ -82,9 +82,11 @@ function App() {
       : { color: '#cfcff9' }
   );
 
-  window.onload = () => {
-    document.getElementById('editor').focus();
-  };
+  const editorRef = useRef(null);
+
+  useEffect(() => {
+    editorRef.current.focus();
+  }, []);
 
   return (
     <div id='main'>
@@ -101,6 +103,7 @@ function App() {
             setInput(value);
             localStorage.setItem('input', value);
           }}
+          ref={editorRef}
         />
         <div id='buttons'>
           <button onClick={clear}>Clear</button>
