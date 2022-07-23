@@ -13,6 +13,12 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Markdown Previewer</title>
   </head>
+  <script>
+    (() => {
+      document.documentElement.dataset.theme =
+        localStorage.getItem('theme') || 'light';
+    })();
+  </script>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>

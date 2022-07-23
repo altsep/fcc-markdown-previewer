@@ -1,58 +1,55 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import breaks from 'remark-breaks';
 import DOMPurify from 'dompurify';
 import useInput from './hooks/useInput';
 import usePrevious from './hooks/usePrevious';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import {
-  vs2015,
-  atomOneLight,
-} from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { prism, okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function App() {
-  const [btnTrigger, setbtnTrigger] = useState(
-    JSON.parse(localStorage.getItem('isDark')) || false
-  );
+  const [theme, setTheme] = useState(document.documentElement.dataset.theme);
 
   const { input, setInput, clear, reset } = useInput();
 
   const clean = DOMPurify.sanitize(input);
   if (DOMPurify.removed.length > 0) {
-    console.log('Data removed by dompurify: ' + DOMPurify.removed);
+    console.log('Data removed by dompurify: ');
+    DOMPurify.removed.forEach((item) => console.dir(item));
   }
 
   const prevInput = usePrevious(input);
-  // console.log(prevInput);
 
-  const btnClass = btnTrigger ? 'dark' : 'light';
-  const elements = useRef();
-  useEffect(() => {
-    if (document.querySelector('body')) {
-      elements.current = document.querySelector('body');
-      elements.current.style.backgroundColor =
-        btnClass === 'light' ? '' : '#202020';
-    }
-  });
-
-  const renderers = {
-    code: ({ language, value }) => {
+  const Highlighted = {
+    code({ node, inline, className, children, ...props }) {
+      const match = /language-(\w+)/.exec(className || '');
+      const inlineProps = (inline || !match) && {
+        PreTag: 'span',
+        language: 'html',
+        // useInlineStyles: false,
+        customStyle: {
+          padding: '2px 0px',
+          margin: 'none',
+          fontSize: '14px',
+          backgroundColor: theme === 'light' ? '#fafafa' : '#202020',
+        },
+      };
       return (
         <SyntaxHighlighter
-          style={btnClass === 'dark' ? vs2015 : atomOneLight}
-          language='javascript'
-          children={value}
-        />
-      );
-    },
-    inlineCode: ({ language, value }) => {
-      return (
-        <SyntaxHighlighter
-          style={btnClass === 'dark' ? vs2015 : atomOneLight}
-          language='htmlbars'
-          children={value}
-        />
+          style={theme === 'dark' ? okaidia : prism}
+          language={match ? match[1] : 'javascript'}
+          PreTag='div'
+          wrapLongLines
+          customStyle={{
+            fontSize: '14px',
+            backgroundColor: theme === 'light' ? '#fafafa' : '#202020',
+          }}
+          {...props}
+          {...inlineProps}
+        >
+          {String(children).replace(/\n$/, '')}
+        </SyntaxHighlighter>
       );
     },
   };
@@ -70,7 +67,7 @@ function App() {
   })(document.createElement('style'));
   addRule(
     'a',
-    btnClass === 'light'
+    theme === 'light'
       ? {
           color: 'blue',
         }
@@ -78,7 +75,7 @@ function App() {
   );
   addRule(
     'a:visited',
-    btnClass === 'light'
+    theme === 'light'
       ? {
           color: '#551a8b',
         }
@@ -90,14 +87,13 @@ function App() {
   };
 
   return (
-    <div id='main' className={btnClass}>
+    <div id='main'>
       <div id='editor-container'>
         <textarea
           rows='50'
           cols='50'
           id='editor'
-          className={btnClass}
-          placeholder='input data'
+          placeholder={`Input markdown...`}
           type='text'
           value={input !== undefined ? input : ''}
           onChange={(e) => {
@@ -106,39 +102,37 @@ function App() {
             localStorage.setItem('input', value);
           }}
         />
-        <div id='buttons' className={btnClass}>
-          <button className={btnClass} onClick={clear}>
-            Clear
-          </button>
-          <button className={btnClass} onClick={() => setInput(prevInput)}>
-            Restore
-          </button>
-          <button className={btnClass} onClick={reset}>
-            Reset
-          </button>
+        <div id='buttons'>
+          <button onClick={clear}>Clear</button>
+          <button onClick={() => setInput(prevInput)}>Restore</button>
+          <button onClick={reset}>Reset</button>
         </div>
       </div>
       <div
         style={input === '' || input === undefined ? { border: 'none' } : null}
         id='preview'
-        className={btnClass}
       >
         <ReactMarkdown
-          renderers={renderers}
-          plugins={[gfm, breaks]}
+          components={Highlighted}
+          remarkPlugins={[gfm, breaks]}
           children={clean}
         />
       </div>
       <div
         id='theme-switch'
-        className={btnClass}
         onClick={() => {
-          setbtnTrigger(!btnTrigger);
-          localStorage.setItem('isDark', !btnTrigger);
+          const documentTheme = document.documentElement.dataset.theme;
+          if (documentTheme === 'light') {
+            setTheme('dark');
+            document.documentElement.dataset.theme = 'dark';
+            localStorage.setItem('theme', 'dark');
+          } else if (documentTheme === 'dark') {
+            setTheme('light');
+            document.documentElement.dataset.theme = 'light';
+            localStorage.setItem('theme', 'light');
+          }
         }}
-      >
-        <div id='theme-switch-inner' className={btnClass}></div>
-      </div>
+      ></div>
     </div>
   );
 }
