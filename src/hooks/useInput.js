@@ -16,7 +16,7 @@ export default function useInput() {
   };
 }
 
-const defaultText = `# Welcome to markdown previewer!
+const defaultText = `# Welcome to my markdown previewer!
 
 ## Sub-heading...
 ### Other things:
@@ -27,8 +27,8 @@ Inline code: \`<div class='class'></div>\`
 // Multi-line code:
 
 function anotherExample(firstLine, lastLine) {
-if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
-  return multiLineCode;
+  if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
+    return multiLineCode;
   }
 }
 \`\`\`
