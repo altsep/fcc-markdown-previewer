@@ -83,16 +83,20 @@ function App() {
           <button onClick={reset}>Reset</button>
         </div>
       </div>
-      <div
-        style={input === '' || input === undefined ? { border: 'none' } : null}
-        id='preview'
-      >
-        <ReactMarkdown
-          components={Highlighted}
-          remarkPlugins={[gfm, breaks]}
-          children={clean}
-        />
-      </div>
+      {input !== '' && (
+        <div
+          style={
+            input === '' || input === undefined ? { border: 'none' } : null
+          }
+          id='preview'
+        >
+          <ReactMarkdown
+            components={Highlighted}
+            remarkPlugins={[gfm, breaks]}
+            children={clean}
+          />
+        </div>
+      )}
       <div
         id='theme-switch'
         onClick={() => {
