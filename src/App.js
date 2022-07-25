@@ -67,7 +67,7 @@ function App() {
           rows='50'
           cols='50'
           id='editor'
-          placeholder={`Input markdown...`}
+          placeholder={`Input markdown here...`}
           type='text'
           value={input !== undefined ? input : ''}
           onChange={(e) => {

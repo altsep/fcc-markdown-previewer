@@ -16,7 +16,9 @@ export default function useInput() {
   };
 }
 
-const defaultText = `# Welcome to my markdown previewer!
+const defaultText = `\`// Input gets sanitized by DOMPurify before being rendered and therefore may not be displayed correctly\`
+
+# Welcome to my markdown previewer!
 
 ## Sub-heading...
 ### Other things:
