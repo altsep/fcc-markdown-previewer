@@ -2,7 +2,7 @@
   --color: #000;
   --anchor-color: blue;
   --anchor-color-visited: purple;
-  --bg: #fafafa;
+  --bg: #f6f6f6;
   --bg-plain: #fff;
   --shadow-color: #bbb;
 }
@@ -161,7 +161,7 @@ button {
   #editor-container {
     min-width: 100px;
     max-width: 500px;
-    margin-right: 20px; 
+    margin-right: 20px;
   }
 
   #editor {
