@@ -150,6 +150,10 @@ button {
   padding: 0;
 }
 
+img {
+  max-width: 100%;
+}
+
 @media (min-width: 768px) {
   #main {
     flex-direction: row;
