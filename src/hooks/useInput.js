@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export default function useInput() {
   const [input, setInput] = useState(
-    localStorage.getItem('input') || defaultText
+    localStorage.getItem('altsep_markdown-previewer_input') || defaultText
   );
 
   return {
@@ -11,7 +11,7 @@ export default function useInput() {
     clear: () => setInput(''),
     reset: () => {
       setInput(defaultText);
-      localStorage.removeItem('input');
+      localStorage.removeItem('altsep_markdown-previewer_input');
     },
   };
 }

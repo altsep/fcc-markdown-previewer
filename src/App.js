@@ -73,7 +73,7 @@ function App() {
           onChange={(e) => {
             const { value } = e.target;
             setInput(value);
-            localStorage.setItem('input', value);
+            localStorage.setItem('altsep_markdown-previewer_input', value);
           }}
           ref={editorRef}
         />
@@ -97,21 +97,21 @@ function App() {
           />
         </div>
       )}
-      <div
+      <button
         id='theme-switch'
         onClick={() => {
           const documentTheme = document.documentElement.dataset.theme;
           if (documentTheme === 'light') {
             setTheme('dark');
             document.documentElement.dataset.theme = 'dark';
-            localStorage.setItem('theme', 'dark');
+            localStorage.setItem('altsep_markdown-previewer_theme', 'dark');
           } else if (documentTheme === 'dark') {
             setTheme('light');
             document.documentElement.dataset.theme = 'light';
-            localStorage.setItem('theme', 'light');
+            localStorage.setItem('altsep_markdown-previewer_theme', 'light');
           }
         }}
-      ></div>
+      ></button>
     </div>
   );
 }
